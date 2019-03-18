@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
+const routes = require('./routes');
+const routesApi = require('./routes-api');
+
 app.set('appName', 'Meu primeiro servidor');
 app.set('views' , __dirname + '/views');
  
@@ -9,16 +12,10 @@ app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
 
-
 //Rotas
-app.get('/', (req, res) => {
-   res.render('index.ejs');
-})
+app.use(routes);
+app.use('/api', routesApi);
 
-app.get('/login', (req, res) => {
-    res.render('login.ejs');
-});
- 
 app.get('*', (req, res) => {
     res.end('404 - Pagina não encontrada');
 })
